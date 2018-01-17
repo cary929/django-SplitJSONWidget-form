@@ -30,6 +30,16 @@ class SplitJSONWidget(forms.Widget):
         return u""" <label for="%s">%s:</label>
         <input%s />""" % (attrs['id'], key, flatatt(attrs))
 
+    def build_attrs(self, base_attrs, extra_attrs=None, **kwargs):
+        """
+        Helper function for building an attribute dictionary.
+        This is combination of the same method from Django<=1.10 and Django1.11+
+        """
+        attrs = dict(base_attrs, **kwargs)
+        if extra_attrs:
+            attrs.update(extra_attrs)
+        return attrs
+
     def _to_build(self, name, json_obj):
         inputs = []
         if isinstance(json_obj, list):
